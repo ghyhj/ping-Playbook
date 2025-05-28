@@ -1,0 +1,7 @@
+---
+- name: 测试所有主机是否连通
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: 执行 ping
+      ansible.builtin.ping:
