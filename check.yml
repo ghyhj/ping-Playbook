@@ -1,0 +1,45 @@
+---
+- name: 巡检 10.10.32.211 主机状态
+  hosts: all
+  gather_facts: yes
+  tasks:
+
+    - name: 显示主机名和当前时间
+      shell: "echo HOST: $(hostname) | cat && date"
+      register: basic_info
+
+    - name: 输出主机名与时间
+      debug:
+        var: basic_info.stdout_lines
+
+    - name: 检查根目录磁盘使用情况
+      shell: df -h /
+      register: disk_usage
+
+    - name: 输出磁盘使用情况
+      debug:
+        var: disk_usage.stdout_lines
+
+    - name: 检查内存使用情况
+      shell: free -h
+      register: mem_usage
+
+    - name: 输出内存使用情况
+      debug:
+        var: mem_usage.stdout_lines
+
+    - name: 检查 CPU 信息
+      shell: lscpu | grep 'Model name'
+      register: cpu_info
+
+    - name: 输出 CPU 信息
+      debug:
+        var: cpu_info.stdout_lines
+
+    - name: 检查当前运行的服务
+      shell: systemctl list-units --type=service --state=running
+      register: services
+
+    - name: 输出运行中的服务
+      debug:
+        var: services.stdout_lines
