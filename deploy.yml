@@ -1,7 +1,7 @@
-- name: 部署任务
+- name: 使用版本号部署
   hosts: all
   gather_facts: no
   tasks:
-    - name: 打印接收到的版本号
+    - name: 显示接收到的版本号
       debug:
-        msg: "从 Job A 传来的版本号是：{{ workflow_vars.app_version }}"
+        msg: "部署使用的版本号是：{{ app_version }}"
