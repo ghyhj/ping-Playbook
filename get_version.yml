@@ -10,3 +10,4 @@
       set_stats:
         data:
           app_version: "{{ version_result.stdout }}"
+      delegate_to: localhost
