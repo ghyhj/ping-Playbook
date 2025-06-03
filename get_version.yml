@@ -1,0 +1,12 @@
+- name: 获取版本号
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: 模拟获取版本号
+      shell: echo 1.2.3
+      register: version_result
+
+    - name: 用 set_stats 上报变量
+      set_stats:
+        data:
+          app_version: "{{ version_result.stdout }}"
