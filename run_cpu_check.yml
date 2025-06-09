@@ -21,6 +21,29 @@
         src: /opt/scripts/logs/cpu_checks.log
       register: cpu_log
 
-    - name: Show CPU check log output
+    - name: Convert log to lines
+      set_fact:
+        log_lines: "{{ cpu_log.content | b64decode | splitlines() }}"
+
+    - name: Extract latest Node line
+      set_fact:
+        latest_node_line: "{{ (log_lines | reverse | select('match', '.*Node:.*') | list)[0] }}"
+
+    - name: Extract latest CPU Count line
+      set_fact:
+        latest_count_line: "{{ (log_lines | reverse | select('match', '.*CPU Count:.*') | list)[0] }}"
+
+    - name: Extract latest CPU Model line
+      set_fact:
+        latest_model_line: "{{ (log_lines | reverse | select('match', '.*CPU Model:.*') | list)[0] }}"
+
+    - name: Set structured CPU info
+      set_fact:
+        cpu_info:
+          node: "{{ latest_node_line.split(' - INFO - ')[1] }}"
+          cpu_count: "{{ latest_count_line.split('CPU Count: ')[1] }}"
+          cpu_model: "{{ latest_model_line.split('CPU Model: ')[1] }}"
+
+    - name: Show structured CPU check result
       debug:
-        msg: "{{ cpu_log['content'] | b64decode }}"
+        var: cpu_info
