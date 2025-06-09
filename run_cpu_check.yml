@@ -1,0 +1,17 @@
+---
+- name: Run CPU Check Script on Target Host
+  hosts: gpu_nodes
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Ensure logs directory exists
+      file:
+        path: /opt/scripts/logs
+        state: directory
+        mode: '0755'
+
+    - name: Run cpu_checks.py script
+      shell: python3 /opt/scripts/cpu_checks.py
+      args:
+        chdir: /opt/scripts/
