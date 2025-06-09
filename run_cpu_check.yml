@@ -15,3 +15,12 @@
       shell: python3 /opt/scripts/cpu_checks.py
       args:
         chdir: /opt/scripts/
+
+    - name: Read log file content
+      slurp:
+        src: /opt/scripts/logs/cpu_checks.log
+      register: cpu_log
+
+    - name: Show CPU check log output
+      debug:
+        msg: "{{ cpu_log['content'] | b64decode }}"
