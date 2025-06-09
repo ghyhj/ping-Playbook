@@ -1,8 +1,8 @@
 ---
-- name Ubuntu 主机连接测试
-  hosts all
-  gather_facts false
+- name: Ubuntu 主机连接测试
+  hosts: all
+  gather_facts: false
 
-  tasks
-    - name 使用 Ansible ping 测试连接
-      ansible.builtin.ping
+  tasks:
+    - name: 使用 Ansible ping 测试连接
+      ansible.builtin.ping:
