@@ -1,8 +1,1 @@
-all:
-  children:
-    gpu_nodes:
-      hosts:
-{% for i in range(101, 131) %}
-        gpu{{ i }}:
-          ansible_host: 10.10.32.{{ i }}
-{% endfor %}
+
