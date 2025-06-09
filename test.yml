@@ -1,0 +1,9 @@
+---
+- name: 最小测试 playbook
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: 打印测试信息
+      ansible.builtin.debug:
+        msg: "Ansible 正常工作 ✅"
